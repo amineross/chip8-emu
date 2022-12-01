@@ -29,7 +29,7 @@ class Emu
     std::array<uint16_t, STACK_SIZE> stack;
     uint16_t sp;
 
-    std::array<bool, NUM_KEYS> keys;
+    
     uint8_t delayTimer;
     uint8_t soundTimer;
 
@@ -53,6 +53,8 @@ class Emu
     public:
     Emu();
     uint32_t screen[SCREEN_HEIGHT*SCREEN_WIDTH];
+    // std::array<bool, NUM_KEYS> keys;
+    uint8_t keys[NUM_KEYS];
     // void push(uint16_t val);
     // uint16_t pop();
     void execute();
@@ -110,7 +112,7 @@ class Emu
 
     //front-end
     // std::array<bool, SCREEN_HEIGHT*SCREEN_WIDTH> get_screen();
-    std::array<bool, NUM_KEYS> get_keys();
+    // std::array<bool, NUM_KEYS> get_keys();
     void keyPress(uint8_t index, bool pressed);
     void loadROM(char const * filename);
 

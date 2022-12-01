@@ -10,7 +10,7 @@ int main(int argc, char * argv[])
         return 1;
     }
     int scale = std::stoi(argv[1]);
-    int delay = std::stoi(argv[2]);
+    int delay = std::stof(argv[2]);
 
     char const* rom_filename = argv[3];
 
@@ -27,11 +27,15 @@ int main(int argc, char * argv[])
 
     while (!quit)
     {
-        quit = machine.processInput(emulator.get_keys());
+        quit = machine.processInput(emulator.keys);
+        // ImGui_ImplSDLRenderer_NewFrame();
+        // ImGui_ImplSDL2_NewFrame();
+        // ImGui::NewFrame();
+
+        // ImGui::ShowDemoWindow( (bool*) true);
 
         auto currentTime = std::chrono::high_resolution_clock::now();
         float dt = std::chrono::duration<float, std::chrono::milliseconds::period>(currentTime - lastCycleTime).count();
-
         if (dt > delay)
         {
             lastCycleTime = currentTime;
@@ -39,6 +43,11 @@ int main(int argc, char * argv[])
             machine.Update(emulator.screen, videoPitch);
         }
     }
+    for (int i = 0; i<NUM_KEYS; i++)
+    {
+        std::cout << emulator.keys[i] << " ";
+    }
+    std::cout << "\n";
     return 0;
 }
 

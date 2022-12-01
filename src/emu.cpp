@@ -15,6 +15,7 @@ Emu::Emu(): randGen(std::chrono::system_clock::now().time_since_epoch().count())
         // sp = 0;
         // std::fill(stack.begin(), stack.end(), 0);
         // std::fill(keys.begin(), keys.end(), false);
+        memset(keys, 0, sizeof(keys));
         // delayTimer = 0;
         // soundTimer = 0;
 
@@ -115,7 +116,7 @@ void Emu::tick_timers()
     {
         if (soundTimer == 1)
         {
-            //BEEP
+            std::cout << "BEEP\n";
         }
         soundTimer -= 1;
     }
@@ -433,23 +434,96 @@ void Emu::OP_Fx07() //Vx = DelayTimer
     v_reg[x] = delayTimer;
 }
 
-void Emu::OP_Fx0A() // wait for key press (endless loop until pressed)
+// void Emu::OP_Fx0A() // wait for key press (endless loop until pressed)
+// {
+//     uint8_t x = (opcode & 0x0F00) >> 8;
+//     bool pressed = false;
+//     for (int i = 0; i<NUM_KEYS; i++)
+//     {
+//         if (keys[i])
+//         {
+//             v_reg[x] = i;
+//             pressed = true;
+//             break;
+//         }
+//     }
+//     if (!pressed)
+//     {
+//         pc -= 2;
+//     }
+// }
+
+void Emu::OP_Fx0A()
 {
     uint8_t x = (opcode & 0x0F00) >> 8;
-    bool pressed = false;
-    for (int i = 0; i<NUM_KEYS; i++)
-    {
-        if (keys[i])
-        {
-            v_reg[x] = i;
-            pressed = true;
-            break;
-        }
-    }
-    if (!pressed)
-    {
-        pc -= 2;
-    }
+    if (keys[0])
+	{
+		v_reg[x] = 0;
+	}
+	else if (keys[1])
+	{
+		v_reg[x] = 1;
+	}
+	else if (keys[2])
+	{
+		v_reg[x] = 2;
+	}
+	else if (keys[3])
+	{
+		v_reg[x] = 3;
+	}
+	else if (keys[4])
+	{
+		v_reg[x] = 4;
+	}
+	else if (keys[5])
+	{
+		v_reg[x] = 5;
+	}
+	else if (keys[6])
+	{
+		v_reg[x] = 6;
+	}
+	else if (keys[7])
+	{
+		v_reg[x] = 7;
+	}
+	else if (keys[8])
+	{
+		v_reg[x] = 8;
+	}
+	else if (keys[9])
+	{
+		v_reg[x] = 9;
+	}
+	else if (keys[10])
+	{
+		v_reg[x] = 10;
+	}
+	else if (keys[11])
+	{
+		v_reg[x] = 11;
+	}
+	else if (keys[12])
+	{
+		v_reg[x] = 12;
+	}
+	else if (keys[13])
+	{
+		v_reg[x] = 13;
+	}
+	else if (keys[14])
+	{
+		v_reg[x] = 14;
+	}
+	else if (keys[15])
+	{
+		v_reg[x] = 15;
+	}
+	else
+	{
+		pc -= 2;
+	}
 }
 
 void Emu::OP_Fx15() // delayTimer = Vx
@@ -518,10 +592,10 @@ void Emu::OP_Fx65()
     }
 }
 
-std::array<bool, NUM_KEYS> Emu::get_keys()
-{
-    return keys;
-}
+// std::array<bool, NUM_KEYS> Emu::get_keys()
+// {
+//     return keys;
+// }
 
 void Emu::keyPress(uint8_t index, bool pressed)
 {

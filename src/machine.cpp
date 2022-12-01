@@ -1,5 +1,10 @@
 #include <iostream>
 #include <array>
+
+// #include "../imgui/imgui.h"
+// #include "../imgui/backends/imgui_impl_sdl.h"
+// #include "../imgui/backends/imgui_impl_sdlrenderer.h"
+
 #include <SDL.h>
 
 class Machine
@@ -12,10 +17,20 @@ class Machine
     public:
     Machine(char const * title, int windowWidth, int windowHeight, int textureWidth, int textureHeight)
     {
+        //SDL INIT
         SDL_Init(SDL_INIT_VIDEO);
         window = SDL_CreateWindow(title, 0, 0, windowWidth, windowHeight, SDL_WINDOW_SHOWN);
-        renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+        renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
         texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STREAMING, textureWidth, textureHeight);
+
+        // ImGUI INIT
+        // IMGUI_CHECKVERSION();
+        // ImGui::CreateContext();
+        // ImGuiIO& io = ImGui::GetIO(); (void)io;
+
+        // ImGui::StyleColorsDark(); // style
+        // ImGui_ImplSDL2_InitForSDLRenderer(window, renderer);
+        // ImGui_ImplSDLRenderer_Init(renderer);
     }
 
     ~Machine()
@@ -34,7 +49,7 @@ class Machine
         SDL_RenderPresent(renderer);
     }
 
-    bool processInput(std::array<bool, 16> keys)
+    bool processInput(uint8_t* keys)
     {
         bool quit = false;
 
@@ -42,6 +57,7 @@ class Machine
 
         while (SDL_PollEvent(&event))
         {
+            // ImGui_ImplSDL2_ProcessEvent(&event); // ImGUI Event Handler;
             switch (event.type)
             {
                 case SDL_QUIT:
@@ -61,6 +77,7 @@ class Machine
 						case SDLK_x:
 						{
 							keys[0] = 1;
+                            std::cout << "Pressing x\n";
 						} break;
 
 						case SDLK_1:
