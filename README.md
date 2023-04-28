@@ -36,7 +36,7 @@ To compile and run this project, you will need a C++ compiler with C++14 support
 1. Clone the repository to your local machine:
 
 ```bash
-git clone https://github.com/yourusername/chip8-emulator.git
+git clone https://github.com/amineross/chip8-emulator.git
 cd chip8-emulator/src
 ````
 2. Compile using this command
